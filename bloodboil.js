@@ -12,7 +12,7 @@ class Bloodboil {
                     height: 200,
                     enablejsapi: true,
                     streamername: streamerName,
-                    origin: "https://tarkov.help",
+                    origin: document.URL,
                     events: {
                         onReady() {
                             console.log(player);
