@@ -46,7 +46,7 @@ class Bloodboil {
     initDOM() {
         this.widget = document.getElementById(this.id);
         this.widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
-        this.widget.style.display = 'block';
+        this.widget.style.display = 'none';
     }
 
     initListeners() {
@@ -61,4 +61,4 @@ class Bloodboil {
     }
 }
 
-new Bloodboil('stream-widget', 'TheBlindShogun');
+new Bloodboil('stream-widget', 'Dunduk');
