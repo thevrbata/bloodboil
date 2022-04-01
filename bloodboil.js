@@ -7,25 +7,8 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 this.initDOM();
-                this.player = new Trovo.TrovoPlayer('frame', {
-                    width: 350,
-                    height: 200,
-                    enablejsapi: true,
-                    streamername: streamerName,
-                    origin: document.URL,
-                    events: {
-                        onReady() {
-                            console.log(player);
-                            player.play();
-                            player.mute();
-                        },
-                    onStateChange(state) {
-                        if (state == 'ended') {
-                            document.getElementById('stream-widget').style.display = 'none';
-                        }
-                    }
-                }
-                });
+                this.frame = document.getElementById('frame');
+                this.frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
                 this.initListeners();
             }
         }
