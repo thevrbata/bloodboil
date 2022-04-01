@@ -7,7 +7,7 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 this.initDOM();
-                let player = new Trovo.TrovoPlayer('frame', {
+                this.player = new Trovo.TrovoPlayer('frame', {
                     width: 350,
                     height: 200,
                     enablejsapi: true,
@@ -59,4 +59,4 @@ class Bloodboil {
     }
 }
 
-new Bloodboil('stream-widget', 'Dunduk');
+let TrovoPlayer = new Bloodboil('stream-widget', 'Dunduk');
