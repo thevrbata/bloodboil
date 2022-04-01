@@ -43,4 +43,4 @@ class Bloodboil {
     }
 }
 
-let TrovoPlayer = new Bloodboil('stream-widget', 'Dunduk');
+let TrovoPlayer = new Bloodboil('stream-widget', 'TarkovHelp');
