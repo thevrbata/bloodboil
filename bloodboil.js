@@ -51,7 +51,7 @@ class Bloodboil {
 
     initListeners() {
         let setCookie = this.setCookie.bind(this);
-        let widget = this.widget.bind(this);
+        let widget = this.widget;
         var close = document.getElementById('close-btn');
         close.addEventListener('click', function () {
             widget.style.display = 'none';
