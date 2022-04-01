@@ -11,7 +11,7 @@ class Bloodboil {
             },
             onStateChange(state) {
                 if (state == 'ended') {
-                    document.getElementById('player').style.display = 'none';
+                    document.getElementById('stream-widget').style.display = 'none';
                 }
             }
         }
@@ -44,13 +44,14 @@ class Bloodboil {
     }
 
     initDOM() {
-        var widget = document.getElementById(this.id);
-        widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
-        widget.style.display = 'block';
+        this.widget = document.getElementById(this.id);
+        this.widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
+        this.widget.style.display = 'block';
     }
 
     initListeners() {
         let setCookie = this.setCookie.bind(this);
+        let widget = this.widget.bind(this);
         var close = document.getElementById('close-btn');
         close.addEventListener('click', function () {
             widget.style.display = 'none';
