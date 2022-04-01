@@ -26,7 +26,7 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 this.initDOM();
-                new Trovo.TrovoPlayer('frame', this.options);
+                let player = new Trovo.TrovoPlayer('frame', this.options);
                 this.initListeners();
             }
         }
