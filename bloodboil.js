@@ -1,32 +1,30 @@
 class Bloodboil {
-    options = {
-        width: 350,
-        height: 200,
-        enablejsapi: true,
-        origin: "https://tarkov.help",
-        events: {
-            onReady() {
-                this.play();
-                this.mute();
-            },
-            onStateChange(state) {
-                if (state == 'ended') {
-                    document.getElementById('stream-widget').style.display = 'none';
-                }
-            }
-        }
-    };
-
     cookieName = 'twitch-widget-hidden';
 
     constructor(id, streamerName) {
         this.id = id;
-        this.options.streamername = streamerName;
         if (this.getCookie() != 'true') {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 this.initDOM();
-                let player = new Trovo.TrovoPlayer('frame', this.options);
+                let player = new Trovo.TrovoPlayer('frame', {
+                    width: 350,
+                    height: 200,
+                    enablejsapi: true,
+                    streamername: streamerName,
+                    origin: "https://tarkov.help",
+                    events: {
+                        onReady() {
+                            this.play();
+                            this.mute();
+                        },
+                    onStateChange(state) {
+                        if (state == 'ended') {
+                            document.getElementById('stream-widget').style.display = 'none';
+                        }
+                    }
+                }
+                });
                 this.initListeners();
             }
         }
