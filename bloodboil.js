@@ -46,7 +46,7 @@ class Bloodboil {
     initDOM() {
         this.widget = document.getElementById(this.id);
         this.widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
-        this.widget.style.display = 'none';
+        this.widget.style.display = 'block';
     }
 
     initListeners() {
