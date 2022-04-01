@@ -15,6 +15,7 @@ class Bloodboil {
                     origin: "https://tarkov.help",
                     events: {
                         onReady() {
+                            console.log(player);
                             player.play();
                             player.mute();
                         },
