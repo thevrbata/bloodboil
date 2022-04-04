@@ -17,12 +17,13 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 for (const streamer of this.streamerOrder) {
-                    if (this.checkOnline(streamer) === true) {
-                        streamerName = streamer;
-                        break;
-                    }
+                    console.log(this.checkOnline(streamer));
+//                     if (this.checkOnline(streamer) === true) {
+//                         streamerName = streamer;
+//                         break;
+//                     }
                 }
-                console.log(streamerName);
+
                 if (streamerName.length > 0) {
                     this.initDOM();
                     this.frame = document.getElementById('frame');
