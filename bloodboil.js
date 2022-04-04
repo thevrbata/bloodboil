@@ -16,20 +16,14 @@ class Bloodboil {
             // Не показываем на мобильных устройствах
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
-                for (const streamer of this.streamerOrder) {
-                    console.log(this.checkOnline(streamer));
-//                     if (this.checkOnline(streamer) === true) {
-//                         streamerName = streamer;
-//                         break;
-//                     }
-                }
-
-                if (streamerName.length > 0) {
-                    this.initDOM();
-                    this.frame = document.getElementById('frame');
-                    this.frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
-                    this.initListeners();
-                }
+                this.checkOnline().then(function(streamerName) {
+                    if (streamerName.length > 0) {
+                        this.initDOM();
+                        this.frame = document.getElementById('frame');
+                        this.frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
+                        this.initListeners();
+                    }
+                })
             }
         }
     }
@@ -45,24 +39,29 @@ class Bloodboil {
         document.cookie = this.cookieName + "=true; max-age=172800; secure; path=/";
     }
 
-    async checkOnline(streamerName) {
-       let myHeaders = new Headers();
-        myHeaders.append("Client-ID", "7c5066daa26a52998c95152dad2931a7");
-        myHeaders.append("Content-Type", "application/json");
+    async checkOnline() {
+        for (const streamer of this.streamerOrder) {
+            let myHeaders = new Headers();
+            myHeaders.append("Client-ID", "7c5066daa26a52998c95152dad2931a7");
+            myHeaders.append("Content-Type", "application/json");
 
-        let raw = JSON.stringify({
-            "username": streamerName
-        });
+            let raw = JSON.stringify({
+                "username": streamerName
+            });
 
-        let requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-        let online = await this.fetchData(requestOptions);
-        console.log(online);
-        return online;
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let online = await this.fetchData(requestOptions);
+            if (online === true) {
+                return streamer;
+                break;
+            }
+        }
+        return false;
     }
     
     async fetchData(requestOptions)
