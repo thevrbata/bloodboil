@@ -17,7 +17,8 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 for (const streamer of this.streamerOrder) {
-                    console.log(this.checkOnline(streamer).then(online => { return online; }));
+                    let online = this.checkOnline(streamer).then(online => { return online; });
+                    console.log(online);
 //                     if (if (this.checkOnline(streamer).then(online => { return online; }) === true) {) {
 //                         streamerName = streamer;
 //                         break;
