@@ -8,7 +8,7 @@ class Bloodboil {
         'dunduk'
     ];
 
-    constructor(id) {
+    async constructor(id) {
         this.id = id;
         let streamerName = '';
 
@@ -17,14 +17,12 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 for (const streamer of this.streamerOrder) {
-                    this.checkOnline(streamer).then(online => {
-                        if (online === true) {
-                            streamerName = streamer;
-                        } });
-                    console.log(streamerName);
-                    if (streamerName.length > 0) {
-                        break;     
+                    let checkOnline = await this.checkOnline(streamer);
+                    if (checkOnline === true) {
+                        streamerName = streamer;
+                        break;
                     }
+                    console.log(streamerName);
                 }
 
                 if (streamerName.length > 0) {
