@@ -45,7 +45,7 @@ class Bloodboil {
     }
 
     checkOnline(streamerName) {
-        let myHeaders = new Headers();
+       let myHeaders = new Headers();
         myHeaders.append("Client-ID", "7c5066daa26a52998c95152dad2931a7");
         myHeaders.append("Content-Type", "application/json");
 
@@ -60,11 +60,13 @@ class Bloodboil {
             redirect: 'follow'
         };
 
-        let streamerInfo = {};
-
-        fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions)
-            .then(response => streamerInfo = response.text())
-            .catch(error => console.log('error', error));
+        return this.fetchData(requestOptions);
+    }
+    
+    async fetchData(requestOptions)
+    {
+        const response = await fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions);
+        const streamerInfo = await response.text();
 
         return streamerInfo.hasOwnProperty('is_live') && streamerInfo.is_live === true;
     }
