@@ -70,7 +70,7 @@ class Bloodboil {
     async fetchData(requestOptions)
     {
         const response = await fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions);
-        const streamerInfo = await response.text();
+        const streamerInfo = await response.json();
 
         return streamerInfo.hasOwnProperty('is_live') && streamerInfo.is_live === true;
     }
