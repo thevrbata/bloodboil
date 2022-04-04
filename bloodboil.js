@@ -8,7 +8,7 @@ class Bloodboil {
         'dunduk'
     ];
 
-    async constructor(id) {
+    constructor(id) {
         this.id = id;
         let streamerName = '';
 
@@ -17,12 +17,10 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 for (const streamer of this.streamerOrder) {
-                    let checkOnline = await this.checkOnline(streamer);
-                    if (checkOnline === true) {
+                    if (this.checkOnline(streamer) === true) {
                         streamerName = streamer;
                         break;
                     }
-                    console.log(streamerName);
                 }
 
                 if (streamerName.length > 0) {
@@ -46,7 +44,7 @@ class Bloodboil {
         document.cookie = this.cookieName + "=true; max-age=172800; secure; path=/";
     }
 
-    checkOnline(streamerName) {
+    async checkOnline(streamerName) {
        let myHeaders = new Headers();
         myHeaders.append("Client-ID", "7c5066daa26a52998c95152dad2931a7");
         myHeaders.append("Content-Type", "application/json");
@@ -61,8 +59,8 @@ class Bloodboil {
             body: raw,
             redirect: 'follow'
         };
-      
-        return this.fetchData(requestOptions);
+        let online = await this.fetchData(requestOptions);
+        return online;
     }
     
     async fetchData(requestOptions)
