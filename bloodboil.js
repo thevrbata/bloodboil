@@ -1,33 +1,34 @@
 class Bloodboil {
-    options = {
-        width: 350,
-        height: 200,
-        enablejsapi: true,
-        origin: "https://tarkov.help",
-        events: {
-            onReady() {
-                this.play();
-                this.mute();
-            },
-            onStateChange(state) {
-                if (state == 'ended') {
-                    document.getElementById('player').style.display = 'none';
-                }
-            }
-        }
-    };
-
     cookieName = 'twitch-widget-hidden';
+    // Порядок показа стримеров (больше ключ - ниже приоритет)
+    streamerOrder = [
+        'tarkovhelp',
+        'theblindshogun',
+        'goldencargo',
+        'dunduk'
+    ];
 
-    constructor(id, streamerName) {
+    constructor(id) {
         this.id = id;
-        this.options.streamername = streamerName;
+        let streamerName = '';
+
         if (this.getCookie() != 'true') {
+            // Не показываем на мобильных устройствах
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
-                this.initDOM();
-                new Trovo.TrovoPlayer('frame', this.options);
-                this.initListeners();
+                for (const streamer of this.streamerOrder) {
+                    if (this.checkOnline(streamer) === true) {
+                        streamerName = streamer;
+                        break;
+                    }
+                }
+
+                if (streamerName.length > 0) {
+                    this.initDOM();
+                    this.frame = document.getElementById('frame');
+                    this.frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
+                    this.initListeners();
+                }
             }
         }
     }
@@ -43,14 +44,41 @@ class Bloodboil {
         document.cookie = this.cookieName + "=true; max-age=172800; secure; path=/";
     }
 
+    checkOnline(streamerName) {
+        let myHeaders = new Headers();
+        myHeaders.append("Client-ID", "7c5066daa26a52998c95152dad2931a7");
+        myHeaders.append("Content-Type", "application/json");
+
+        let raw = JSON.stringify({
+            "username": streamerName
+        });
+
+        let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            mode: "no-cors",
+            body: raw,
+            redirect: 'follow'
+        };
+
+        let streamerInfo = {};
+
+        fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions)
+            .then(response => streamerInfo = response.text())
+            .catch(error => console.log('error', error));
+
+        return streamerInfo.hasOwnProperty('is_live') && streamerInfo.is_live === true;
+    }
+
     initDOM() {
-        var widget = document.getElementById(this.id);
-        widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
-        widget.style.display = 'block';
+        this.widget = document.getElementById(this.id);
+        this.widget.innerHTML = '<div id="header"><div id="text">Заходи на стрим, дружище!</div><span id="close-btn"/></div><div id="frame"></div>';
+        this.widget.style.display = 'block';
     }
 
     initListeners() {
         let setCookie = this.setCookie.bind(this);
+        let widget = this.widget;
         var close = document.getElementById('close-btn');
         close.addEventListener('click', function () {
             widget.style.display = 'none';
@@ -60,4 +88,4 @@ class Bloodboil {
     }
 }
 
-new Bloodboil('stream-widget', 'TheBlindShogun');
+let TrovoPlayer = new Bloodboil('stream-widget');
