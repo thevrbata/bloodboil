@@ -10,18 +10,19 @@ class Bloodboil {
 
     constructor(id) {
         this.id = id;
-        let streamerName = '';
 
         if (this.getCookie() != 'true') {
             // Не показываем на мобильных устройствах
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
+                let initDom = this.initDOM.bind(this);
+                let initListeners = this.initListeners.bind(this);
                 this.checkOnline().then(function(streamerName) {
                     if (streamerName.length > 0) {
-                        this.initDOM();
-                        this.frame = document.getElementById('frame');
-                        this.frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
-                        this.initListeners();
+                        initDom();
+                        let frame = document.getElementById('frame');
+                        frame.innerHTML = '<iframe src="https://player.trovo.live/embed/player?streamername=' + streamerName + '&muted=1&autoplay=1&hidefollow=1&hidesub=1" height="200" width="350" allowfullscreen="true"></iframe>';
+                        initListeners();
                     }
                 })
             }
@@ -46,7 +47,7 @@ class Bloodboil {
             myHeaders.append("Content-Type", "application/json");
 
             let raw = JSON.stringify({
-                "username": streamerName
+                "username": streamer
             });
 
             let requestOptions = {
@@ -63,7 +64,7 @@ class Bloodboil {
         }
         return false;
     }
-    
+
     async fetchData(requestOptions)
     {
         const response = await fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions);
@@ -91,3 +92,4 @@ class Bloodboil {
 }
 
 let TrovoPlayer = new Bloodboil('stream-widget');
+
