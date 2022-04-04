@@ -60,7 +60,11 @@ class Bloodboil {
             redirect: 'follow'
         };
 
-        return this.fetchData(requestOptions);
+        let online = false;
+        
+        this.fetchData(requestOptions).then(result => online = result);
+        
+        return online;
     }
     
     async fetchData(requestOptions)
