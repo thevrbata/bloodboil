@@ -56,7 +56,6 @@ class Bloodboil {
         let requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            mode: "no-cors",
             body: raw,
             redirect: 'follow'
         };
