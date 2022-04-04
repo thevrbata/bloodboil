@@ -17,10 +17,11 @@ class Bloodboil {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             } else {
                 for (const streamer of this.streamerOrder) {
-                    if (this.checkOnline(streamer) === true) {
-                        streamerName = streamer;
-                        break;
-                    }
+                    console.log(this.checkOnline(streamer));
+//                     if (this.checkOnline(streamer) === true) {
+//                         streamerName = streamer;
+//                         break;
+//                     }
                 }
 
                 if (streamerName.length > 0) {
@@ -60,6 +61,7 @@ class Bloodboil {
             redirect: 'follow'
         };
         let online = await this.fetchData(requestOptions);
+        console.log(online);
         return online;
     }
     
