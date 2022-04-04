@@ -21,6 +21,7 @@ class Bloodboil {
                         if (online === true) {
                             streamerName = streamer;
                         } });
+                    console.log(streamerName);
                     if (streamerName.length > 0) {
                         break;     
                     }
