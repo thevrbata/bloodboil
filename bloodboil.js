@@ -22,7 +22,7 @@ class Bloodboil {
                         break;
                     }
                 }
-
+                console.log(streamerName);
                 if (streamerName.length > 0) {
                     this.initDOM();
                     this.frame = document.getElementById('frame');
@@ -63,7 +63,7 @@ class Bloodboil {
         let online = false;
         
         this.fetchData(requestOptions).then(result => online = result);
-        
+        console.log(online);
         return online;
     }
     
@@ -71,7 +71,6 @@ class Bloodboil {
     {
         const response = await fetch("https://open-api.trovo.live/openplatform/channels/id", requestOptions);
         const streamerInfo = await response.json();
-        console.log(streamerInfo.is_live);
 
         return streamerInfo.hasOwnProperty('is_live') && streamerInfo.is_live === true;
     }
