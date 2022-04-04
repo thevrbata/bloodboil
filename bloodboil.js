@@ -59,12 +59,8 @@ class Bloodboil {
             body: raw,
             redirect: 'follow'
         };
-
-        let online = false;
-        
-        this.fetchData(requestOptions).then(result => online = result);
-        console.log(online);
-        return online;
+      
+        return this.fetchData(requestOptions);
     }
     
     async fetchData(requestOptions)
